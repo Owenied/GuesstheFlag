@@ -32,11 +32,11 @@ class ViewController: UIViewController {
         
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         
-        askQuestion()
+        askQuestion(action: nil)
         
     }
     
-    func askQuestion() {
+    func askQuestion(action: UIAlertAction! = nil) {
         
         countries = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: countries) as! [String]
         
@@ -53,6 +53,22 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        
+        var title: String
+        
+        if sender.tag == correctAnswer {
+            title = "Correct"
+            score += 1
+        } else {
+            title = "Wrong"
+            score -= 1
+        }
+        
+        let ac = UIAlertController(title: title, message: "Your score is \(score)", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
+        present(ac, animated: true)
+    }
 
 }
 
